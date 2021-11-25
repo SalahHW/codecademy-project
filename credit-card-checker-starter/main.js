@@ -28,7 +28,7 @@ function validateCred(array){
   // Creating empty array that will contain muted values from the original array
   const checkerArray = []
   let isPair = false;
-  for (let i = array.length; i >= 0 ; i--) {
+  for (let i = array.length - 1; i >= 0 ; i--) {
     if (isPair === false){
       checkerArray.push(array[i]);
       isPair = true;
@@ -46,14 +46,10 @@ function validateCred(array){
   }
   let accu = 0
   for (let i = 0; i< checkerArray.length ; i++){
-    accu += array[i];
+    accu += checkerArray[i];
     console.log(accu);
   }
-  if (accu % 10 === 0){
-  return true;
-  } else {
-  return false;
-  }
+  return accu % 10 === 0;
 }
 
 // testing function
