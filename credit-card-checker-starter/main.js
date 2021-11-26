@@ -27,12 +27,10 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 function validateCred(array){
   // Creating empty array that will contain muted values from the original array
   const checkerArray = []
-  let isPair = false;
   for (let i = 0; i < array.length ; i++) {
     let reversedIndex = array.length - 1 - i;
-    if (isPair === false){
+    if (i % 2 === 0){
       checkerArray.push(array[reversedIndex]);
-      isPair = true;
     } else {
       let perTwo = array[reversedIndex] * 2;
       let summedNumber = 0;
@@ -42,13 +40,12 @@ function validateCred(array){
       } else {
         checkerArray.push(perTwo);
       }
-      isPair = false;
     }
   }
+  console.log(checkerArray);
   let accu = 0
   for (let i = 0; i< checkerArray.length ; i++){
     accu += checkerArray[i];
-    console.log(accu);
   }
   return accu % 10 === 0;
 }
