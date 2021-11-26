@@ -38,6 +38,3 @@ const perTwo = (value) => {
   const perTwo = value * 2;
   return perTwo >= 10 ? perTwo - 9 : perTwo;
 };
-
-console.log(validateCred(valid2));
-console.log(validateCred(invalid4));
