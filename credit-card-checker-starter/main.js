@@ -40,7 +40,6 @@ function validateCred(array){
       }
     }
   }
-  console.log(accu);
   return accu % 10 === 0;
 }
 
