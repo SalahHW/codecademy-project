@@ -25,7 +25,7 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 // Function that check if credit card number is valid folowing the Luhn formula
 function validateCred(array){
-  // Creating empty array that will contain muted values from the original array
+  // Creating accumulator that will contain final value
   let accu = 0
   for (let i = 0; i < array.length ; i++) {
     let reversedIndex = array.length - 1 - i;
