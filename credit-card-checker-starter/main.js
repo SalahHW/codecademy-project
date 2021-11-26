@@ -26,20 +26,18 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 // Function that check if credit card number is valid folowing the Luhn formula
 function validateCred(array){
   // Creating accumulator that will contain final value
-  let accu = 0
+  let accu = 0;
   for (let i = 0; i < array.length ; i++) {
-    let reversedIndex = array.length - 1 - i;
-    if (i % 2 === 0){
-      accu += array[reversedIndex];
-    } else {
-      let perTwo = array[reversedIndex] * 2;
-      if (perTwo >= 10){
-        accu += perTwo - 9;
-      } else {
-        accu += perTwo;
-      }
-    }
+    const currentDigit = array[array.length - 1 - i];
+    accu += i % 2 === 0 ? currentDigit : perTwo(currentDigit);
   }
   return accu % 10 === 0;
 }
 
+const perTwo = (value) => {
+  const perTwo = value * 2;
+  return perTwo >= 10 ? perTwo - 9 : perTwo;
+};
+
+console.log(validateCred(valid2));
+console.log(validateCred(invalid4));
