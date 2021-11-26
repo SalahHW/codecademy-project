@@ -28,12 +28,13 @@ function validateCred(array){
   // Creating empty array that will contain muted values from the original array
   const checkerArray = []
   let isPair = false;
-  for (let i = array.length - 1; i >= 0 ; i--) {
+  for (let i = 0; i < array.length ; i++) {
+    let reversedIndex = array.length - 1 - i;
     if (isPair === false){
-      checkerArray.push(array[i]);
+      checkerArray.push(array[reversedIndex]);
       isPair = true;
     } else {
-      let perTwo = array[i] * 2;
+      let perTwo = array[reversedIndex] * 2;
       let summedNumber = 0;
       if (perTwo >= 10){
         summedNumber = perTwo - 9;
