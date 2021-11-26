@@ -33,10 +33,8 @@ function validateCred(array){
       accu += array[reversedIndex];
     } else {
       let perTwo = array[reversedIndex] * 2;
-      let summedNumber = 0;
       if (perTwo >= 10){
-        summedNumber = perTwo - 9;
-        accu += summedNumber;
+        accu += perTwo - 9;
       } else {
         accu += perTwo;
       }
