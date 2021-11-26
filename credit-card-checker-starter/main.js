@@ -26,27 +26,23 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 // Function that check if credit card number is valid folowing the Luhn formula
 function validateCred(array){
   // Creating empty array that will contain muted values from the original array
-  const checkerArray = []
+  let accu = 0
   for (let i = 0; i < array.length ; i++) {
     let reversedIndex = array.length - 1 - i;
     if (i % 2 === 0){
-      checkerArray.push(array[reversedIndex]);
+      accu += array[reversedIndex];
     } else {
       let perTwo = array[reversedIndex] * 2;
       let summedNumber = 0;
       if (perTwo >= 10){
         summedNumber = perTwo - 9;
-        checkerArray.push(summedNumber);
+        accu += summedNumber;
       } else {
-        checkerArray.push(perTwo);
+        accu += perTwo;
       }
     }
   }
-  console.log(checkerArray);
-  let accu = 0
-  for (let i = 0; i< checkerArray.length ; i++){
-    accu += checkerArray[i];
-  }
+  console.log(accu);
   return accu % 10 === 0;
 }
 
