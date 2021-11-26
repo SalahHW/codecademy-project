@@ -43,6 +43,3 @@ function validateCred(array){
   return accu % 10 === 0;
 }
 
-// testing function
-console.log(validateCred(valid2));
-console.log(validateCred(invalid3));
