@@ -29,12 +29,15 @@ function validateCred(array){
   let accu = 0;
   for (let i = 0; i < array.length ; i++) {
     const currentDigit = array[array.length - 1 - i];
-    accu += i % 2 === 0 ? currentDigit : perTwo(currentDigit);
+    accu += i % 2 === 0 ? currentDigit : calculatePerTwo(currentDigit);
   }
   return accu % 10 === 0;
 }
 
-const perTwo = (value) => {
+const calculatePerTwo = (value) => {
   const perTwo = value * 2;
   return perTwo >= 10 ? perTwo - 9 : perTwo;
 };
+
+//console.log(validateCred(valid4));
+//console.log(validateCred(invalid2));
