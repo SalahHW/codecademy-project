@@ -41,7 +41,7 @@ const calculatePerTwo = (value) => {
 
 // return an array of invalid cards
 function findInvalidCards(cards){
-  invalidCards = [];
+  let invalidCards = [];
   cards.forEach(card => {
     if (validateCred(card) === false){
       invalidCards.push(card);
