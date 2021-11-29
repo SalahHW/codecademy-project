@@ -37,7 +37,20 @@ function validateCred(array){
 const calculatePerTwo = (value) => {
   const perTwo = value * 2;
   return perTwo >= 10 ? perTwo - 9 : perTwo;
-};
+}
+
+// return an array of invalid cards
+function findInvalidCards(cards){
+  invalidCards = [];
+  cards.forEach(card => {
+    if (validateCred(card) === false){
+      invalidCards.push(card);
+    }
+  });
+  return invalidCards;
+}
+
+console.log(findInvalidCards(batch));
 
 //console.log(validateCred(valid4));
 //console.log(validateCred(invalid2));
