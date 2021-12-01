@@ -53,20 +53,21 @@ const findInvalidCards = cards => cards.filter(card => !validateCred(card));
 const idInvalidCardCompanies = invalidCards => {
   const involvedCompanies = [];
   invalidCards.forEach(card => {
-    const companyId = card[0];
-    if (companyId in cardCompanies && involvedCompanies.indexOf(cardCompanies[companyId]) < 0) {
+    const companyId = parseInt(card[0]);
+    const companyExist = companyId in cardCompanies;
+    if (companyExist && involvedCompanies.indexOf(cardCompanies[companyId]) < 0) {
       involvedCompanies.push(cardCompanies[companyId]);
-    } else if (cardCompanies[companyId] === undefined) {
+    } else if (!companyExist) {
       console.log('Company not found');
     }
   });
   return involvedCompanies;
 };
 
-const invalidCards = findInvalidCards(batch);
 //Testing functions
-console.log(idInvalidCardCompanies(invalidCards));
-
+//console.log(idInvalidCardCompanies([invalid5]))
+//const invalidCards = findInvalidCards(batch);
+//console.log(idInvalidCardCompanies(invalidCards));
 //console.log(findInvalidCards(batch));
 //console.log(validateCred(valid4));
 //console.log(validateCred(invalid2));
