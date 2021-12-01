@@ -22,9 +22,16 @@ const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3]
 // An array of all the arrays above
 const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery2, mystery3, mystery4, mystery5]
 
+//Hash of card companies
+const cardCompanies = {
+  3: 'American Express',
+  4: 'Visa',
+  5: 'Mastercard',
+  6: 'Discover',
+};
 
 // Function that check if credit card number is valid folowing the Luhn formula
-function validateCred(array){
+const validateCred = (array) => {
   // Creating accumulator that will contain final value
   let accu = 0;
   for (let i = 0; i < array.length ; i++) {
@@ -32,15 +39,33 @@ function validateCred(array){
     accu += i % 2 === 0 ? currentDigit : calculatePerTwo(currentDigit);
   }
   return accu % 10 === 0;
-}
+};
 
 const calculatePerTwo = (value) => {
   const perTwo = value * 2;
   return perTwo >= 10 ? perTwo - 9 : perTwo;
-}
+};
 
 // return an array of invalid cards
 const findInvalidCards = cards => cards.filter(card => !validateCred(card));
+
+// return an array of companies issued by an invalid card
+const idInvalidCardCompanies = invalidCards => {
+  const involvedCompanies = [];
+  invalidCards.forEach(card => {
+    const companyId = card[0];
+    if (companyId in cardCompanies && involvedCompanies.indexOf(cardCompanies[companyId]) < 0) {
+      involvedCompanies.push(cardCompanies[companyId]);
+    } else if (cardCompanies[companyId] === undefined) {
+      console.log('Company not found');
+    }
+  });
+  return involvedCompanies;
+};
+
+const invalidCards = findInvalidCards(batch);
+//Testing functions
+console.log(idInvalidCardCompanies(invalidCards));
 
 //console.log(findInvalidCards(batch));
 //console.log(validateCred(valid4));
