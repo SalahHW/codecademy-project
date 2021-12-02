@@ -30,16 +30,18 @@ const cardCompanies = {
   6: 'Discover',
 };
 
-// Function that check if credit card number is valid folowing the Luhn formula
-const validateCred = (array) => {
-  // Creating accumulator that will contain final value
-  let accu = 0;
+// return the sum of a serial number folowing the Luhn formula
+const luhnFormula = (array) => {
+  let accu = 0
   for (let i = 0; i < array.length ; i++) {
     const currentDigit = array[array.length - 1 - i];
     accu += i % 2 === 0 ? currentDigit : calculatePerTwo(currentDigit);
   }
-  return accu % 10 === 0;
+  return accu;
 };
+
+// check if credit card number is valid folowing the Luhn formula
+const validateCred = (array) => luhnFormula(array) % 10 === 0;
 
 const calculatePerTwo = (value) => {
   const perTwo = value * 2;
@@ -47,10 +49,10 @@ const calculatePerTwo = (value) => {
 };
 
 // return an array of invalid cards
-const findInvalidCards = cards => cards.filter(card => !validateCred(card));
+const findInvalidCards = (cards) => cards.filter(card => !validateCred(card));
 
 // return an array of companies issued by an invalid card
-const idInvalidCardCompanies = invalidCards => {
+const idInvalidCardCompanies = (invalidCards) => {
   const involvedCompanies = [];
   invalidCards.forEach(card => {
     const companyId = parseInt(card[0]);
@@ -65,9 +67,8 @@ const idInvalidCardCompanies = invalidCards => {
 };
 
 //Testing functions
-//console.log(idInvalidCardCompanies([invalid5]))
-//const invalidCards = findInvalidCards(batch);
-//console.log(idInvalidCardCompanies(invalidCards));
-//console.log(findInvalidCards(batch));
-//console.log(validateCred(valid4));
-//console.log(validateCred(invalid2));
+console.log(validateCred(valid1)); // should print true
+console.log(validateCred(invalid1)); // should print false
+
+console.log(findInvalidCards(batch)); // should print an array of invalid cards
+console.log(idInvalidCardCompanies(batch)); // should print an array of companies involved by an invalid card
