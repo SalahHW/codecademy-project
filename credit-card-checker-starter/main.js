@@ -39,7 +39,7 @@ const cardCompanies = {
 const accuLuhnFormula = (array) => {
   let accu = 0;
   // We start the loop at 1 to exclude the control digit
-  for (let i = 1; i < array.length ; i++) {
+  for (let i = 1; i < array.length; i++) {
     const currentDigit = array[array.length - 1 - i];
     accu += i % 2 === 0 ? currentDigit : calculatePerTwo(currentDigit);
   }
@@ -68,6 +68,7 @@ const calculatePerTwo = (value) => {
 };
 
 /**
+ * Take an invalid serial number and change its control digit to a valid one
  * 
  * @param {Array} serial 
  * @returns Array
@@ -85,17 +86,24 @@ const convertToValid = (serial) => {
 
 /**
  * Return an array of invalid cards
+ * 
  * @param {Array} cards 
  * @returns Array
  */
 const findInvalidCards = (cards) => cards.filter(card => !validateCred(card));
 
-// return an array of companies issued by an invalid card
+/**
+ * Return an array of companies extracted from invalid cards
+ * 
+ * @param {Array<Array<number>>} invalidCards 
+ * @returns Array
+ */
 const idInvalidCardCompanies = (invalidCards) => {
   const involvedCompanies = [];
   invalidCards.forEach(card => {
     const companyId = parseInt(card[0]);
     const companyExist = companyId in cardCompanies;
+    // Check if the company is already involved
     if (companyExist && involvedCompanies.indexOf(cardCompanies[companyId]) < 0) {
       involvedCompanies.push(cardCompanies[companyId]);
     } else if (!companyExist) {
