@@ -22,7 +22,7 @@ const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3]
 // An array of all the arrays above
 const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery2, mystery3, mystery4, mystery5]
 
-//Hash of card companies
+// Hash of card companies
 const cardCompanies = {
   3: 'American Express',
   4: 'Visa',
@@ -30,31 +30,64 @@ const cardCompanies = {
   6: 'Discover',
 };
 
-// return the sum of a serial number folowing the Luhn formula
+/**
+ * Return the sum of a serial number folowing the Luhn formula
+ * 
+ * @param {Array} array 
+ * @returns number
+ */
 const accuLuhnFormula = (array) => {
-  let accu = 0
-  for (let i = 0; i < array.length ; i++) {
+  let accu = 0;
+  // We start the loop at 1 to exclude the control digit
+  for (let i = 1; i < array.length ; i++) {
     const currentDigit = array[array.length - 1 - i];
     accu += i % 2 === 0 ? currentDigit : calculatePerTwo(currentDigit);
   }
   return accu;
 };
 
-// check if credit card number is valid folowing the Luhn formula
-const validateCred = (array) => accuLuhnFormula(array) % 10 === 0;
+/**
+ * Check if credit card number is valid folowing the Luhn formula
+ * 
+ * @param {Array} array 
+ * @returns bool
+ */
+const validateCred = (array) => (accuLuhnFormula(array) + array[array.length - 1]) % 10 === 0;
 
+/**
+ * Double the value than sum both digits of the result
+ * if the product is greater than 10, otherwise return the doubled value
+ * 
+ * @param {number} value 
+ * @returns number
+ */
 const calculatePerTwo = (value) => {
   const perTwo = value * 2;
+  // Substracting 9 is a shortcut to obtain the sum of both digits
   return perTwo >= 10 ? perTwo - 9 : perTwo;
 };
 
-const convertToValid = (serial, accu) => {
-  const validCard = serial;
-  validCard[validCard.length - 1] -= 10 - (accu % 10);
+/**
+ * 
+ * @param {Array} serial 
+ * @returns Array
+ */
+const convertToValid = (serial) => {
+  const validCard = serial.slice();
+  const sum = accuLuhnFormula(validCard);
+  let checkDigit = 10 - sum % 10;
+  if (checkDigit === 10) {
+    checkDigit = 0;
+  }
+  validCard[validCard.length - 1] = checkDigit;
   return validCard;
 };
 
-// return an array of invalid cards
+/**
+ * Return an array of invalid cards
+ * @param {Array} cards 
+ * @returns Array
+ */
 const findInvalidCards = (cards) => cards.filter(card => !validateCred(card));
 
 // return an array of companies issued by an invalid card
@@ -73,10 +106,6 @@ const idInvalidCardCompanies = (invalidCards) => {
 };
 
 //Testing functions
-console.log(validateCred(valid1)); // should print true
-console.log(validateCred(invalid1)); // should print false
-console.log(findInvalidCards(batch)); // should print an array of invalid cards
-console.log(idInvalidCardCompanies(batch)); // should print an array of companies involved by an invalid card
-console.log(invalid1);
-console.log(convertToValid(invalid1, accuLuhnFormula(invalid1)));
-console.log(validateCred(invalid1));
+//console.log(validateCred(valid1)); // should print true
+//console.log(findInvalidCards(batch)); // should print an array of invalid cards
+//console.log(idInvalidCardCompanies(batch)); // should print an array of companies involved by an invalid card
