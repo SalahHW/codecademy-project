@@ -41,6 +41,21 @@ const pAequorFactory = (specimenNum, dna) => {
     willLikelySurvive() {
       const cOrGBase = this.dna.filter(base => base === 'C' || base === 'G');
       return cOrGBase.length / this.dna.length * 100 >= 60;
+    },
+    complementStrand() {
+      const complementStrand = [];
+      this.dna.forEach(base => {
+        if (base === 'A') {
+          complementStrand.push('T');
+        } else if (base === 'T') {
+          complementStrand.push('A');
+        } else if (base === 'C') {
+          complementStrand.push('G');
+        } else if (base === 'G') {
+          complementStrand.push('C');
+        } 
+      });
+      return complementStrand;
     }
   }
 };
@@ -57,3 +72,8 @@ const survivingPAequors = (numOfSpecimen) => {
     }
   return pAequors;
 };
+
+const specimen1 = pAequorFactory(1, mockUpStrand());
+
+console.log(specimen1.dna);
+console.log(specimen1.complementStrand());
