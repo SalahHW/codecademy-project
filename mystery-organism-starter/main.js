@@ -43,11 +43,17 @@ const pAequorFactory = (specimenNum, dna) => {
       return cOrGBase.length / this.dna.length * 100 >= 60;
     }
   }
-}
+};
 
-const specimen1 = pAequorFactory(1, mockUpStrand());
-const specimen2 = pAequorFactory(2, mockUpStrand());
-
-console.log(specimen1.dna)
-console.log(specimen1.willLikelySurvive());
-
+const survivingPAequors = (numOfSpecimen) => {
+  const pAequors = [];
+  let specimenNum = 1;
+    while (pAequors.length < numOfSpecimen) {
+      let newSpecimen = pAequorFactory(specimenNum, mockUpStrand());
+      if (newSpecimen.willLikelySurvive()) {
+        pAequors.push(newSpecimen);
+        specimenNum++;
+      }
+    }
+  return pAequors;
+};
