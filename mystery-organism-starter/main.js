@@ -30,26 +30,24 @@ const pAequorFactory = (specimenNum, dna) => {
     },
     compareDNA(pAequor) {
       let commonDNA = 0;
-      for (let i = 0; i < pAequor.dna.length; i++){ // replace with flter
+      for (let i = 0; i < pAequor.dna.length; i++){
         if (pAequor.dna[i] === this.dna[i]){
           commonDNA++;
         }  
       }
       const percentage = Math.round(commonDNA / pAequor.dna.length * 100);
-      console.log(`Specimen ${pAequor.specimenNum} and specimen ${this.specimenNum} have ${percentage}% DNA in common`)
+      console.log(`Specimen ${pAequor.specimenNum} and specimen ${this.specimenNum} have ${percentage}% DNA in common`);
     },
+    willLikelySurvive() {
+      const cOrGBase = this.dna.filter(base => base === 'C' || base === 'G');
+      return cOrGBase.length / this.dna.length * 100 >= 60;
+    }
   }
 }
 
 const specimen1 = pAequorFactory(1, mockUpStrand());
 const specimen2 = pAequorFactory(2, mockUpStrand());
-console.log(specimen1.dna);
-console.log(specimen2.dna);
-specimen1.compareDNA(specimen2);
 
-const specimen3 = pAequorFactory(3, ['A', 'B', 'C', 'D']);
-const specimen4 = pAequorFactory(4, ['A', 'B', 'C', 'J']);
-console.log(specimen3.dna);
-console.log(specimen4.dna);
-specimen3.compareDNA(specimen4);
+console.log(specimen1.dna)
+console.log(specimen1.willLikelySurvive());
 
