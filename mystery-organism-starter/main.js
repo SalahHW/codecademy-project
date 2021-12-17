@@ -13,10 +13,15 @@ const mockUpStrand = () => {
   return newStrand;
 };
 
+// Create a pAequor specimen with an ID and a DNA
 const pAequorFactory = (specimenNum, dna) => {
   return {
     specimenNum,
     dna,
+    /**
+     * Randomly change a base in dna array to a different one
+     * @returns Array
+     */
     mutate() {
       const randomIndex = Math.floor(Math.random() * this.dna.length);
       const randomBase = this.dna[randomIndex];
@@ -28,6 +33,10 @@ const pAequorFactory = (specimenNum, dna) => {
       console.log(randomIndex);
       return this.dna;
     },
+    /**
+     * Log a message that say how much similarity there is beetween 2 arrays
+     * @param {Array} pAequor 
+     */
     compareDNA(pAequor) {
       let commonDNA = 0;
       for (let i = 0; i < pAequor.dna.length; i++){
@@ -38,10 +47,19 @@ const pAequorFactory = (specimenNum, dna) => {
       const percentage = Math.round(commonDNA / pAequor.dna.length * 100);
       console.log(`Specimen ${pAequor.specimenNum} and specimen ${this.specimenNum} have ${percentage}% DNA in common`);
     },
+    /**
+     * Return true if dna contains at least 60% 'C' or 'G' bases
+     * @returns boolean
+     */
     willLikelySurvive() {
       const cOrGBase = this.dna.filter(base => base === 'C' || base === 'G');
       return cOrGBase.length / this.dna.length * 100 >= 60;
     },
+    /**
+     * Return the complementary DNA strand following the rule in : 
+     * https://discoveringthegenome.org/discovering-genome/dna-sequencing/dna-complementary-base-pairing
+     * @returns Array
+     */
     complementStrand() {
       const complementStrand = [];
       this.dna.forEach(base => {
@@ -60,6 +78,11 @@ const pAequorFactory = (specimenNum, dna) => {
   }
 };
 
+/**
+ * Return a list of surviving specimen using pAequorFactory() and willLikelySurvive() rule
+ * @param {number} numOfSpecimen 
+ * @returns Array
+ */
 const survivingPAequors = (numOfSpecimen) => {
   const pAequors = [];
   let specimenNum = 1;
@@ -67,13 +90,8 @@ const survivingPAequors = (numOfSpecimen) => {
       let newSpecimen = pAequorFactory(specimenNum, mockUpStrand());
       if (newSpecimen.willLikelySurvive()) {
         pAequors.push(newSpecimen);
-        specimenNum++;
       }
+      specimenNum++;
     }
   return pAequors;
 };
-
-const specimen1 = pAequorFactory(1, mockUpStrand());
-
-console.log(specimen1.dna);
-console.log(specimen1.complementStrand());
